@@ -1,0 +1,28 @@
+hive> create database dialogues;
+hive> use dialogues;
+
+hive> CREATE TABLE input_scripts
+    > (name STRING, lines STRING)
+    > ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+
+hive>SELECT * FROM input_scripts;
+
+$ hive> LOAD DATA LOCAL INPATH 'root/inputFolder/episodeIV_dialouges.txt' INTO TABLE input_scripts;
+
+hive>SELECT * FROM input_scripts
+
+hive>SELECT COUNT(*) FROM input_scripts where lines like '%Luke%';
+
+#Exports to HDFS directory
+hive> INSERT OVERWRITE DIRECTORY '/user/priya/ProjectActivity2'
+    > SELECT COUNT(*) FROM input_scripts where lines like '%Luke%';
+
+hive> INSERT OVERWRITE LOCAL DIRECTORY '/root/ProjectActivity2'
+    > SELECT COUNT(*) FROM input_scripts where lines like '%Luke%';
+
+$ hdfs dfs -cat /user/priya/ProjectActivity2/000000_0;
+
+hive>exit;
+
+
+$ cat /root/ProjectActivity2/000000_0;

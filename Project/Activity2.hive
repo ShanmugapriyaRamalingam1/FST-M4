@@ -1,0 +1,34 @@
+hive> create database dialogues;
+hive> use dialogues;
+
+hive> CREATE TABLE word_scripts
+    > (name STRING, lines STRING)
+    > ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+
+hive>SELECT * FROM word_scripts;
+
+$ hive> LOAD DATA LOCAL INPATH 'root/inputFolder' INTO TABLE word_scripts;
+
+hive>SELECT * FROM word_scripts;
+
+hive>CREATE TABLE output_count
+    >SELECT name, COUNT(lines) AS lines_count FROM word_Scripts
+    >GROUP BY name
+    >ORDER BY lines_count DESC; 
+
+SELECT * FROM output_count
+
+#Exports to HDFS directory
+hive> INSERT OVERWRITE DIRECTORY '/user/priya/ProjectActivity1'
+    > ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+    > SELECT * FROM output_count;
+
+
+#Exports to LOCAL directory
+hive> INSERT OVERWRITE LOCAL DIRECTORY '/root/ProjectActivity1' 
+    > ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+    > SELECT * FROM output_count;
+hive>exit;
+
+$ hdfs dfs -cat /user/priya/ProjectActivity1/000000_0;
+$ cat /root/ProjectActivity1/000000_0;
