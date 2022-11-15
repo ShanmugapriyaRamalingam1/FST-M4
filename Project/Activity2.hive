@@ -11,7 +11,7 @@ $ hive> LOAD DATA LOCAL INPATH 'root/inputFolder' INTO TABLE word_scripts;
 
 hive>SELECT * FROM word_scripts;
 
-hive>CREATE TABLE output_count
+hive>CREATE TABLE output_count AS
     >SELECT name, COUNT(lines) AS lines_count FROM word_Scripts
     >GROUP BY name
     >ORDER BY lines_count DESC; 
